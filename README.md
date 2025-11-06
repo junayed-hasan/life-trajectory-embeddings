@@ -45,22 +45,22 @@ This is the first system to treat complete biographies (not just resumes) as vec
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                     Data Ingestion Layer                        │
-│  Wikidata SPARQL → 790 persons × 10,455 events → BigQuery      │
+│  Wikidata SPARQL → 790 persons × 10,455 events → BigQuery       │
 └─────────────────────────────────────────────────────────────────┘
                                 ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│                   Embedding Generation Layer                     │
+│                   Embedding Generation Layer                    │
 │  Life Events → Narrative Text → Vertex AI text-embedding-004    │
-│                      → 768D Vectors                              │
+│                      → 768D Vectors                             │
 └─────────────────────────────────────────────────────────────────┘
                                 ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│              Dimensionality Reduction & Clustering               │
-│   PCA (768D→50D) → UMAP (50D→3D) → K-means (15 clusters)       │
+│              Dimensionality Reduction & Clustering              │
+│   PCA (768D→50D) → UMAP (50D→3D) → K-means (15 clusters)        │
 └─────────────────────────────────────────────────────────────────┘
                                 ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│                      Application Layer                           │
+│                      Application Layer                          │
 │   FastAPI Backend ←→ BigQuery Vector Store ←→ React Frontend    │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -74,6 +74,11 @@ This is the first system to treat complete biographies (not just resumes) as vec
 - **Quality metrics**: 100% name/ID completeness, mean 13.2 events per person
 
 ## Method
+
+### 0. Infrastructure & Env Setup (Phases 1-2)
+- GCP project with BigQuery, Vertex AI, Cloud Run APIs enabled
+- BigQuery dataset: 4 tables + 3 analytical views
+- Service account with proper IAM roles, auto-shutdown for cost management
 
 ### 1. Data Collection (Phase 3)
 Wikidata SPARQL queries extract structured life events with temporal data:
@@ -494,6 +499,10 @@ Email: junayedhasan100@gmail.com
 **Koushik Rameshbabu** - MSE Data Science, Johns Hopkins University  
 Email: koushik.ramesh2002@gmail.com
 
+**Soudeh Ghorbani** - Scientist - Meta, Director - Foundational Networked Systems Lab, 
+Faculty - Computer Science, Johns Hopkins University
+Email: soudeh@cs.jhu.edu
+
 ## Citation
 
 If you use this work in your research, please cite:
@@ -514,9 +523,14 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Wikidata community for biographical data
+We would like to thank **Professor Soudeh Ghorbani** for supervising this project and providing valuable guidance throughout the development process.
+
+We are also grateful to the teaching assistants and course staff of Johns Hopkins University EN.601.619 Cloud Computing for their support and feedback.
+
+Special thanks to:
+- Wikidata community for providing open biographical data
 - Google Cloud Platform for research credits
-- Johns Hopkins University EN.605.788 Cloud Computing course
+- The open-source communities behind FastAPI, React, and deck.gl
 
 ---
 
